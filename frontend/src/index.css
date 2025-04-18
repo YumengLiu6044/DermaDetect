@@ -19,3 +19,11 @@
     border-color: #8b5cf6;
     background-color: rgba(139, 92, 246, 0.05);
 }
+
+.navbar-link {
+    color: #cbd5e1;
+}
+
+.no-underline {
+    text-decoration: none;
+}
