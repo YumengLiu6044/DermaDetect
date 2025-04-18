@@ -53,7 +53,7 @@ const Home = () => {
 								<a
 									href="#scan-now"
 									className="no-underline w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
-                                >
+								>
 									Scan Now{" "}
 									<i className="fas fa-arrow-down ml-2 text-indigo-600"></i>
 								</a>
@@ -62,8 +62,7 @@ const Home = () => {
 								<a
 									href="#"
 									className="no-underline w-full flex items-center justify-center px-8 py-3 border-2 font-medium rounded-md text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 md:py-4 md:text-lg md:px-10"
-        
-                                >
+								>
 									Learn More
 								</a>
 							</div>
@@ -567,7 +566,8 @@ const Home = () => {
 						<div className="inline-flex rounded-md shadow">
 							<a
 								href="#scan-now"
-								className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50"
+								className="no-underline inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50"
+
 							>
 								Scan Your Skin Now
 							</a>
@@ -575,7 +575,8 @@ const Home = () => {
 						<div className="ml-3 inline-flex rounded-md shadow">
 							<a
 								href="#"
-								className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70"
+								className="no-underline inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70"
+
 							>
 								Learn More
 							</a>
