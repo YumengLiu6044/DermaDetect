@@ -31,7 +31,9 @@ function Navbar() {
 		<div className="flex gap-5 h-16 w-full px-20 items-center bg-[#F5F5F5]">
 			<div className="flex items-center">
 				<i className="fas fa-dna text-indigo-600 text-2xl mr-2"></i>
-				<span className="text-xl font-bold text-black">DermaScan</span>
+				<span className="text-xl font-bold text-black">
+					DermaScan
+				</span>
 			</div>
 			<div className="w-full flex justify-baseline sm:ml-6 sm:flex sm:space-x-8">
 				{paths.map((item, index) => (
@@ -47,13 +49,10 @@ function Navbar() {
 								location.pathname == item.pathname
 									? "black"
 									: "gray",
-							textDecorationLine:
-								location.pathname == item.pathname
-									? "underline"
-									: "none",
-							textDecorationColor: "#8b5cf6",
-							textDecorationThickness: 2,
-							textUnderlineOffset: 5,
+                            textDecorationLine: location.pathname == item.pathname ? "underline" : "none",
+                            textDecorationColor: "#8b5cf6",
+                            textDecorationThickness: 2,
+                            textUnderlineOffset: 5
 						}}
 					>
 						{item.desc}
