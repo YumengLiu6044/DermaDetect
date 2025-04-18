@@ -1,6 +1,32 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+
+const paths = [
+	{
+		pathname: "/",
+		desc: "Home",
+	},
+	{
+		pathname: "/how-it-works",
+		desc: "How It Works",
+	},
+	{
+		pathname: "/about-skin-cancer",
+		desc: "About Skin Cancer",
+	},
+	{
+		pathname: "/find-a-dermatologist",
+		desc: "Find a Dermatolofist",
+	},
+];
 
 function Navbar() {
+	const location = useLocation();
+
+	useEffect(() => {
+		console.log(location);
+	}, [location]);
+
 	return (
 		<div className="flex gap-5 h-16 w-full px-20 items-center bg-[#F5F5F5]">
 			<div className="flex items-center">
@@ -10,34 +36,28 @@ function Navbar() {
 				</span>
 			</div>
 			<div className="w-full flex justify-baseline sm:ml-6 sm:flex sm:space-x-8">
-				<Link
-					to="/"
-					className="navbar-link text-black no-underline hover:text-black inline-flex items-center px-1 pt-1 font-medium text-sm"
-                    style={{ textDecoration: "none" }}
-				>
-					Home
-				</Link>
-				<Link
-					to="/how-it-works"
-					className="navbar-link text-black hover:text-black inline-flex items-center px-1 pt-1 font-medium text-sm"
-					style={{ textDecoration: "none" }}
-				>
-					How It Works
-				</Link>
-				<Link
-					to="/about-skin-cancer"
-					className="navbar-link text-black hover:text-black inline-flex items-center px-1 pt-1 font-medium text-sm"
-					style={{ textDecoration: "none" }}
-				>
-					About Skin Cancer
-				</Link>
-				<Link
-					to="/find-a-dermatologist"
-					className="navbar-link text-black hover:text-black inline-flex items-center px-1 pt-1 font-medium text-sm"
-					style={{ textDecoration: "none" }}
-				>
-					Find a Dermatologist
-				</Link>
+				{paths.map((item, index) => (
+					<Link
+						key={index}
+						to={item.pathname}
+						className={
+							"navbar-link no-underline hover:text-black inline-flex items-center px-1 pt-1 font-medium text-sm "
+						}
+						style={{
+							textDecoration: "none",
+							color:
+								location.pathname == item.pathname
+									? "black"
+									: "gray",
+                            textDecorationLine: location.pathname == item.pathname ? "underline" : "none",
+                            textDecorationColor: "#8b5cf6",
+                            textDecorationThickness: 2,
+                            textUnderlineOffset: 5
+						}}
+					>
+						{item.desc}
+					</Link>
+				))}
 			</div>
 		</div>
 	);
