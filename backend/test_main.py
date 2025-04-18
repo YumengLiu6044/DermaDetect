@@ -1,5 +1,6 @@
 import unittest
 import requests
+import time
 
 BACKEND_URL = "https://dermadetect.onrender.com"   # Change this to the backend url when testing
 TEST_IMG_PATH = "skin_cancer_test.jpeg"
@@ -49,7 +50,10 @@ class MyTestCase(unittest.TestCase):
         with open(TEST_IMG_PATH, "rb") as file:
             file_name = TEST_IMG_PATH.split("/")[-1]
             files = {"file": (file_name, file, "image/jpeg")}
+            begin = time.time()
             response = requests.post(prediction_endpoint, files=files)
+            finish = time.time()
+            print(f"Elapsed time: {finish - begin}")
 
             self.assertEqual(expected_response_code, response.status_code)
             self.assertTrue("probabilities" in response.json())
