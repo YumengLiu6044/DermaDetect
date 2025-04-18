@@ -9,3 +9,13 @@
 .gradient-bg {
     background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
 }
+
+.upload-box {
+    border: 2px dashed #cbd5e1;
+    transition: all 0.3s ease;
+}
+
+.upload-box:hover {
+    border-color: #8b5cf6;
+    background-color: rgba(139, 92, 246, 0.05);
+}
