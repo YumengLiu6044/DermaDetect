@@ -39,11 +39,11 @@ const Home = () => {
 		<div>
 			<div className="gradient-bg text-white">
 				<div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
-					<div className="text-center">
-						<h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+					<div className="text-center flex flex-col gap-3">
+						<span className="text-4xl tracking-tight sm:text-3xl lg:text-5xl">
 							Early Detection Saves Lives
-						</h1>
-						<p className="mt-6 max-w-lg mx-auto text-xl">
+						</span>
+						<p className="mt-6 max-w-3xl mx-auto text-2xl text-white">
 							Our AI-powered skin cancer detection system helps
 							you monitor suspicious moles and spots with 95%
 							accuracy.
@@ -342,7 +342,7 @@ const Home = () => {
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="lg:text-center mb-12">
 						<h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
-							Why Choose DermAI
+							Why Choose DermaDetect
 						</h2>
 						<p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
 							Advanced Skin Cancer Detection
