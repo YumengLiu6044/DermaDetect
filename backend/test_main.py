@@ -2,7 +2,7 @@ import unittest
 import requests
 import time
 
-BACKEND_URL = "https://dermadetect.onrender.com"   # Change this to the backend url when testing
+BACKEND_URL = "https://yumeng-liu-derma-scan.hf.space"   # Change this to the backend url when testing
 TEST_IMG_PATH = "skin_cancer_test.jpeg"
 search_header = {"Content-Type": "application/json"}
 

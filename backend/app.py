@@ -28,11 +28,9 @@ app.add_middleware(
 )
 
 # Load model and processor
-processor = AutoImageProcessor.from_pretrained(
-    "Anwarkh1/Skin_Cancer-Image_Classification",
-    use_fast=True
-)
-model = AutoModelForImageClassification.from_pretrained("Anwarkh1/Skin_Cancer-Image_Classification")
+model_id = "Anwarkh1/Skin_Cancer-Image_Classification"
+processor = AutoImageProcessor.from_pretrained(model_id)
+model = AutoModelForImageClassification.from_pretrained(model_id)
 
 
 @app.get("/")
