@@ -1,39 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { handlePredict, DiseaseProbs } from "../utility/fetch";
 
 const Home = () => {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [prediction, setPrediction] = useState<string | null>(null);
 	const [isLoading, setLoading] = useState(false);
 
-	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files && e.target.files.length > 0) {
-			setSelectedFile(e.target.files[0]);
+			const selected = e.target.files[0];
+			if (selected.size > 5000000) {
+				console.log("File Too Big");
+				return;
+			}
+			setSelectedFile(selected);
+
+			if (selected) {
+				setLoading(true);
+				handlePredict(
+					selected,
+					(probs: DiseaseProbs) => {
+						setLoading(false);
+						console.log(probs);
+					},
+					(reason: any) => {
+						setPrediction("Failed to obtain predictions");
+						console.log(reason);
+						setLoading(false);
+					}
+				);
+			}
 		}
 	};
 
-	const handlePredictButtonClick = () => {
-		if (isLoading) return;
-
-		if (selectedFile) {
-			setLoading(true);
-			handlePredict(
-				selectedFile,
-				(probs: DiseaseProbs) => {
-					setPrediction(
-						`Probability of Melanoma: ${(
-							probs.melanoma * 100
-						).toFixed(3)}%`
-					);
-					setLoading(false);
-				},
-				() => {
-					setPrediction("Failed to obtain predictions");
-					setLoading(false);
-				}
-			);
-		}
+	const handleUploadDivClick = (e: React.MouseEvent<HTMLDivElement>) => {
+		fileInputRef.current?.click();
+		e.stopPropagation();
 	};
+
+	function UploadSection() {
+		return selectedFile ? (
+			
+				<div className="flex flex-col justify-center rounded-lg p-1">
+					<img
+						src={URL.createObjectURL(selectedFile)}
+						alt="Selected"
+						className="object-cover rounded-lg"
+					/>
+				</div>
+			
+		) : (
+			<div className="p-5">
+				<i className="fas fa-camera text-4xl text-gray-400 mb-4"></i>
+				<h3 className="text-lg font-medium text-gray-900">
+					Upload Skin Image
+				</h3>
+				<p className="mt-1 text-sm text-gray-500">
+					Drag & drop your image here or click to browse
+				</p>
+				<p className="mt-2 text-xs text-gray-400">
+					Supported formats: JPG, PNG (Max 5MB)
+				</p>
+			</div>
+		);
+	}
 
 	return (
 		<div>
@@ -182,26 +213,17 @@ const Home = () => {
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 						<div className="bg-white p-8 rounded-xl shadow-lg">
 							<div
-								className="upload-box rounded-lg p-8 text-center cursor-pointer"
-								id="uploadBox"
+								className="upload-box rounded-lg text-center cursor-pointer"
+								onClick={handleUploadDivClick}
 							>
 								<input
 									type="file"
-									id="fileInput"
 									accept="image/*"
+									onChange={handleFileChange}
 									className="hidden"
+									ref={fileInputRef}
 								/>
-								<i className="fas fa-camera text-4xl text-gray-400 mb-4"></i>
-								<h3 className="text-lg font-medium text-gray-900">
-									Upload Skin Image
-								</h3>
-								<p className="mt-1 text-sm text-gray-500">
-									Drag & drop your image here or click to
-									browse
-								</p>
-								<p className="mt-2 text-xs text-gray-400">
-									Supported formats: JPG, PNG (Max 5MB)
-								</p>
+								<UploadSection></UploadSection>
 							</div>
 
 							<div className="mt-6">
@@ -473,9 +495,9 @@ const Home = () => {
 								</div>
 							</div>
 							<p className="text-gray-600 italic">
-								"Derma Scan detected a suspicious mole that I had
-								overlooked. The early detection allowed me to
-								get treatment before it spread. This service
+								"Derma Scan detected a suspicious mole that I
+								had overlooked. The early detection allowed me
+								to get treatment before it spread. This service
 								truly saved my life."
 							</p>
 							<div className="mt-4 flex text-yellow-400">
@@ -505,8 +527,8 @@ const Home = () => {
 							</div>
 							<p className="text-gray-600 italic">
 								"As someone with many moles, I was always
-								anxious about skin cancer. Derma Scan gives me peace
-								of mind between dermatologist visits. The
+								anxious about skin cancer. Derma Scan gives me
+								peace of mind between dermatologist visits. The
 								accuracy is impressive!"
 							</p>
 							<div className="mt-4 flex text-yellow-400">
@@ -567,7 +589,6 @@ const Home = () => {
 							<a
 								href="#scan-now"
 								className="no-underline inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50"
-
 							>
 								Scan Your Skin Now
 							</a>
@@ -576,7 +597,6 @@ const Home = () => {
 							<a
 								href="#"
 								className="no-underline inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70"
-
 							>
 								Learn More
 							</a>
