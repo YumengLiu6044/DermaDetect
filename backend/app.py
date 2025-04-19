@@ -1,13 +1,9 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-import json
 from PIL import Image
 from torch import no_grad, softmax, load
 from torchvision import transforms
 import io
-import uvicorn
-import requests
-from pydantic import BaseModel, constr, Field, StrictBool, StrictInt
 from model import DermaScannerModel
 
 
