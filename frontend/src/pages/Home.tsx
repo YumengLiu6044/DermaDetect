@@ -473,7 +473,7 @@ const Home = () => {
 								</div>
 							</div>
 							<p className="text-gray-600 italic">
-								"DermAI detected a suspicious mole that I had
+								"Derma Scan detected a suspicious mole that I had
 								overlooked. The early detection allowed me to
 								get treatment before it spread. This service
 								truly saved my life."
@@ -505,7 +505,7 @@ const Home = () => {
 							</div>
 							<p className="text-gray-600 italic">
 								"As someone with many moles, I was always
-								anxious about skin cancer. DermAI gives me peace
+								anxious about skin cancer. Derma Scan gives me peace
 								of mind between dermatologist visits. The
 								accuracy is impressive!"
 							</p>
@@ -535,7 +535,7 @@ const Home = () => {
 								</div>
 							</div>
 							<p className="text-gray-600 italic">
-								"I recommend DermAI to my patients as a
+								"I recommend Derma Scan to my patients as a
 								supplemental tool. It helps identify concerning
 								lesions that need professional evaluation,
 								improving early detection rates."

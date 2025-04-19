@@ -58,7 +58,10 @@ async def predict(file: UploadFile = File(...)):
         outputs = model(image)
         outputs = softmax(outputs, 1)
         outputs = outputs[0]
-        predictions = {class_mapping[index]: item for (index, item) in enumerate(outputs.tolist())}
+        predictions = {
+            class_mapping[index]: item
+            for (index, item) in enumerate(outputs.tolist())
+        }
         return {"predictions": predictions}
 
 
