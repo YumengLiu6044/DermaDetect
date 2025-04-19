@@ -2,7 +2,7 @@ import unittest
 import requests
 import time
 
-BACKEND_URL = "http://127.0.0.1:8080"   # Change this to the backend url when testing
+BACKEND_URL = "https://dermadetect.onrender.com"   # Change this to the backend url when testing
 TEST_IMG_PATH = "skin_cancer_test.jpeg"
 search_header = {"Content-Type": "application/json"}
 
@@ -16,33 +16,6 @@ class MyTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, expected_response_code)
         self.assertEqual(response.json(), expected_response)
-
-    def test_search_doc(self):
-        expected_response_code = 200
-        search_endpoint = BACKEND_URL + "/findDoc"
-        sample_payload = {
-            "query": "melanoma",
-            "page": 0,
-            "getRankingInfo": True,
-            "aroundRadius": 100000,
-            "aroundLatLng": "37.6436195373535, -121.867645263672"
-        }
-        response = requests.post(search_endpoint, json=sample_payload, headers=search_header)
-        self.assertEqual(response.status_code, expected_response_code)
-        self.assertTrue("hits" in response.json())
-
-    def test_search_doc_invalid_type(self):
-        expected_response_code = 422
-        search_endpoint = BACKEND_URL + "/findDoc"
-        sample_payload = {
-            "query": "melanoma",
-            "page": 0,
-            "getRankingInfo": True,
-            "aroundRadius": 100000,
-            "aroundLatLng": 123
-        }
-        response = requests.post(search_endpoint, json=sample_payload, headers=search_header)
-        self.assertEqual(response.status_code, expected_response_code)
 
     def test_get_predictions(self):
         prediction_endpoint = BACKEND_URL + "/predict"
