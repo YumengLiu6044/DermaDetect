@@ -2,19 +2,14 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import json
 from PIL import Image
-from torch import no_grad, set_num_threads, set_num_interop_threads
-import multiprocessing
-from torch.nn.functional import softmax
+from torch import no_grad, softmax, load
+from torchvision import transforms
 import io
-from transformers import AutoImageProcessor, AutoModelForImageClassification
 import uvicorn
 import requests
 from pydantic import BaseModel, constr, Field, StrictBool, StrictInt
+from model import DermaScannerModel
 
-
-# Configure PyTorch threading
-set_num_threads(multiprocessing.cpu_count())
-set_num_interop_threads(multiprocessing.cpu_count())
 
 app = FastAPI()
 
@@ -27,10 +22,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load model and processor
-model_id = "Anwarkh1/Skin_Cancer-Image_Classification"
-processor = AutoImageProcessor.from_pretrained(model_id)
-model = AutoModelForImageClassification.from_pretrained(model_id)
+# Load model
+model = DermaScannerModel()
+model.load_state_dict(load("cnn_weights.pth", weights_only=True))
+model.eval()
+
+transform = transforms.Compose([
+    transforms.Resize((64, 64)),
+    transforms.ToTensor()
+])
+
+class_mapping = {
+    0: "Benign keratosis-like lesions",
+    1: "Melanocytic nevi",
+    2: "Dermatofibroma",
+    3: "Melanoma",
+    4: "Vascular lesions",
+    5: "Basal cell carcinoma",
+    6: "Actinic keratoses"
+}
 
 
 @app.get("/")
@@ -43,19 +53,13 @@ async def read_root():
 async def predict(file: UploadFile = File(...)):
     image_bytes = await file.read()
     image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-    inputs = processor(images=image, return_tensors="pt")
-
+    image = transform(image).unsqueeze(0)
     with no_grad():
-        outputs = model(**inputs)
-
-    logits = outputs.logits
-    probs = softmax(logits, dim=-1)[0]  # Shape: [num_classes]
-
-    # Map class labels to probabilities
-    id2label = model.config.id2label
-    result = {id2label[i]: probs[i].item() for i in range(len(probs))}
-
-    return {"probabilities": result}
+        outputs = model(image)
+        outputs = softmax(outputs, 1)
+        outputs = outputs[0]
+        predictions = {class_mapping[index]: item for (index, item) in enumerate(outputs.tolist())}
+        return {"predictions": predictions}
 
 
 class SearchRequestModel(BaseModel):
@@ -97,4 +101,4 @@ def execute_backend(**kwargs):
 
 
 if __name__ == "__main__":
-    execute_backend(host="0.0.0.0", port=8080, log_level="info")
+    execute_backend(host="0.0.0.0", port=7860, log_level="info")

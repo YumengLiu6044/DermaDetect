@@ -2,7 +2,7 @@ import unittest
 import requests
 import time
 
-BACKEND_URL = "https://yumeng-liu-derma-scan.hf.space"   # Change this to the backend url when testing
+BACKEND_URL = "http://127.0.0.1:8080"   # Change this to the backend url when testing
 TEST_IMG_PATH = "skin_cancer_test.jpeg"
 search_header = {"Content-Type": "application/json"}
 
@@ -56,7 +56,7 @@ class MyTestCase(unittest.TestCase):
             print(f"Elapsed time: {finish - begin}")
 
             self.assertEqual(expected_response_code, response.status_code)
-            self.assertTrue("probabilities" in response.json())
+            self.assertTrue("predictions" in response.json())
 
 
 if __name__ == '__main__':
