@@ -99,9 +99,9 @@ async def findDoc(searchRequest: SearchRequestModel):
     return response.json()
 
 
-def execute_backend(**kwargs):
-    uvicorn.run(app, **kwargs)
-
-
-if __name__ == "__main__":
-    execute_backend(host="0.0.0.0", port=7860, log_level="info")
+# def execute_backend(**kwargs):
+#     uvicorn.run(app, **kwargs)
+#
+#
+# if __name__ == "__main__":
+#     execute_backend(host="0.0.0.0", port=7860, log_level="info")
