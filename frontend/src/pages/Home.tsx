@@ -2,13 +2,22 @@ import React, { useState, useRef } from "react";
 import { handlePredict, DiseaseProbs } from "../utility/fetch";
 import UploadSection from "../components/Upload";
 import AnalysisResult from "../components/AnalysisResult";
-
+import { Link } from "react-router-dom";
 
 const Home = () => {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [predictionProbs, setPredictionProbs] = useState<DiseaseProbs | null>(null);
+	const [predictionProbs, setPredictionProbs] = useState<DiseaseProbs | null>(
+		null
+	);
 	const [isLoading, setLoading] = useState(false);
+
+	const handleLinkClick = () => {
+		window.scrollTo({
+			top: 300,
+			behavior: "smooth",
+		});
+	};
 
 	const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files && e.target.files.length > 0) {
@@ -26,7 +35,7 @@ const Home = () => {
 					(probs: DiseaseProbs) => {
 						setLoading(false);
 						console.log(probs);
-						setPredictionProbs(probs)
+						setPredictionProbs(probs);
 					},
 					(reason: any) => {
 						console.log(reason);
@@ -41,8 +50,6 @@ const Home = () => {
 		fileInputRef.current?.click();
 		e.stopPropagation();
 	};
-
-	
 
 	return (
 		<div>
@@ -68,12 +75,13 @@ const Home = () => {
 								</a>
 							</div>
 							<div className="ml-3 rounded-md shadow">
-								<a
-									href="#"
+								<Link
+									to="/how-it-works"
 									className="no-underline w-full flex items-center justify-center px-8 py-3 border-2 font-medium rounded-md text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 md:py-4 md:text-lg md:px-10"
+									onClick={handleLinkClick}
 								>
 									Learn More
-								</a>
+								</Link>
 							</div>
 						</div>
 					</div>
@@ -83,9 +91,9 @@ const Home = () => {
 			<div className="bg-white py-12">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="lg:text-center">
-						<h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
+						<span className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
 							Skin Cancer Facts
-						</h2>
+						</span>
 						<p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
 							Why Early Detection Matters
 						</p>
@@ -176,9 +184,9 @@ const Home = () => {
 			<div id="scan-now" className="bg-gray-50 py-16">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="lg:text-center mb-12">
-						<h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
+						<span className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
 							Skin Analysis
-						</h2>
+						</span>
 						<p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
 							Check Your Skin in Seconds
 						</p>
@@ -201,7 +209,9 @@ const Home = () => {
 									className="hidden"
 									ref={fileInputRef}
 								/>
-								<UploadSection selectedFile={selectedFile}></UploadSection>
+								<UploadSection
+									selectedFile={selectedFile}
+								></UploadSection>
 							</div>
 
 							<div className="mt-6">
@@ -227,7 +237,10 @@ const Home = () => {
 						</div>
 
 						<div>
-							<AnalysisResult predictions={predictionProbs} isLoading={isLoading}></AnalysisResult>
+							<AnalysisResult
+								predictions={predictionProbs}
+								isLoading={isLoading}
+							></AnalysisResult>
 						</div>
 					</div>
 				</div>
@@ -236,9 +249,9 @@ const Home = () => {
 			<div className="bg-white py-16">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="lg:text-center mb-12">
-						<h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
+						<span className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
 							Why Choose DermaDetect
-						</h2>
+						</span>
 						<p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
 							Advanced Skin Cancer Detection
 						</p>
@@ -342,9 +355,9 @@ const Home = () => {
 			<div className="bg-indigo-50 py-16">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="lg:text-center mb-12">
-						<h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
+						<span className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
 							Success Stories
-						</h2>
+						</span>
 						<p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
 							Trusted by Thousands
 						</p>
@@ -467,12 +480,13 @@ const Home = () => {
 							</a>
 						</div>
 						<div className="ml-3 inline-flex rounded-md shadow">
-							<a
-								href="#"
+							<Link
+								to="/how-it-works"
 								className="no-underline inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70"
+								onClick={handleLinkClick}
 							>
 								Learn More
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>

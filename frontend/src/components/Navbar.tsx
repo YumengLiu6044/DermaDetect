@@ -19,10 +19,6 @@ const paths = [
 function Navbar() {
 	const location = useLocation();
 
-	useEffect(() => {
-		console.log(location);
-	}, [location]);
-
 	return (
 		<div className="flex gap-5 h-16 w-full px-20 items-center bg-[#F5F5F5]">
 			<div className="flex items-center">

@@ -1,14 +1,13 @@
 const API_ENDPOINT = "https://dermadetect.onrender.com/predict";
-// const API_ENDPOINT = "http://127.0.0.1:8080/predict";
 
 export type DiseaseProbs = {
-	"Benign keratosis-like lesions": string;
-	"Melanocytic nevi": string;
-	Dermatofibroma: string;
-	Melanoma: string;
-	"Vascular lesions": string;
-	"Basal cell carcinoma": string;
-	"Actinic keratoses": string;
+	"Benign keratosis-like lesions": number;
+	"Melanocytic nevi": number;
+	Dermatofibroma: number;
+	Melanoma: number;
+	"Vascular lesions": number;
+	"Basal cell carcinoma": number;
+	"Actinic keratoses": number;
 };
 
 export async function handlePredict(

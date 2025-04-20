@@ -37,15 +37,12 @@ export default function HowItWorks() {
 						<span className="mt-6 mx-auto text-xl max-w-3xl">
 							Our skin cancer detection website allows users to
 							upload images of skin lesions for instant analysis.
-							Using a Vision Transformer (ViT) model, it
-							classifies the uploaded image to assess the
-							likelihood of skin cancer.
 						</span>
 					</div>
 				</div>
 			</div>
 
-			<div className="flex flex-col gap-3 items-center my-5 text-center">
+			<div className="flex flex-col gap-3 items-center my-5 text-center" id="steps">
 				<span className="text-3xl font-medium text-black">
 					Simple 3-Step Process
 				</span>
@@ -57,7 +54,7 @@ export default function HowItWorks() {
 				<div className="grid lg:grid-cols-3 sm:grid-cols-1 px-5 items-center py-5 gap-5">
 					{steps.map((item, index) => (
 						<div
-							className={`transition-transform duration-300 hover:scale-105 relative flex flex-col justify-between h-full rounded-2xl shadow-xl items-center p-5 border-2 ${item.border}`}
+							className={`fade-in-up-${index} transition-transform duration-300 hover:scale-105 relative flex flex-col justify-between h-full rounded-2xl shadow-xl items-center p-5 border-2 ${item.border}`}
 							key={index}
 						>
 							<div className="flex flex-col items-center gap-4">
