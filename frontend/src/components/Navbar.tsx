@@ -11,10 +11,6 @@ const paths = [
 		desc: "How It Works",
 	},
 	{
-		pathname: "/about-skin-cancer",
-		desc: "About Skin Cancer",
-	},
-	{
 		pathname: "/find-a-dermatologist",
 		desc: "Find a Dermatolofist",
 	},
