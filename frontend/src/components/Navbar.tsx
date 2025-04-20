@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 import { Link, useLocation } from "react-router-dom";
 
 const paths = [
@@ -12,7 +12,7 @@ const paths = [
 	},
 	{
 		pathname: "/find-a-dermatologist",
-		desc: "Find a Dermatolofist",
+		desc: "Find a Dermatologist",
 	},
 ];
 
