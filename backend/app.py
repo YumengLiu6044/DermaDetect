@@ -95,5 +95,9 @@ async def findDoc(searchRequest: SearchRequestModel):
     if response.status_code != 200:
         raise HTTPException(response.status_code, detail=response.json())
 
-    return response.json()
+    json_data = response.json()
+    if "hits" in json_data:
+        return json_data["hits"]
+    else:
+        return {"hits": []}
 
