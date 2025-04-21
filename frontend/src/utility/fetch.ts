@@ -1,4 +1,5 @@
-const API_ENDPOINT = "https://dermadetect.onrender.com/predict";
+// const API_ENDPOINT = "https://dermadetect.onrender.com/predict";
+const API_ENDPOINT = "http://127.0.0.1:8080/predict"
 
 export type DiseaseProbs = {
 	"Benign keratosis-like lesions": number;
