@@ -10,6 +10,31 @@ import requests
 from pydantic import BaseModel, Field, constr, StrictBool, StrictInt
 
 
+class SearchRequestModel(BaseModel):
+    query: constr(min_length=0) = Field(..., description="Search keyword")
+    aroundLatLng: constr(pattern=r"\-?\d+\.?\d*,\s*\-?\d+\.?\d*") = Field(..., description="Coordinates in 'lat,lng' format")
+    getRankingInfo: StrictBool = Field(..., description="Must be a boolean")
+    page: StrictInt = Field(..., ge=0, description="Page number (0-indexed)")
+    aroundRadius: StrictInt = Field(..., gt=0, description="Search radius in meters (must be positive)")
+
+    class Config:
+        extra = "forbid"
+        arbitrary_types_allowed = False
+
+
+header = {
+    "X-Algolia-Application-Id": "55WTPYUY7Q",
+    "X-Algolia-API-Key": "41da89e44195a72b2d9d109eeee8db8f",
+    "Content-Type": "application/json; charset=UTF-8",
+    "origin": "https://find-a-derm.aad.org",
+    "referer": "https://find-a-derm.aad.org/"
+}
+
+AAD_URL_BASE = "https://55wtpyuy7q-dsn.algolia.net/1/indexes/production/query"
+
+empty_loc = {"lat": -1, "lng": -1}
+ignore_fields = ["_geoloc", "personID", "objectID", "_highlightResult", "_rankingInfo", "locations", "certifications"]
+
 app = FastAPI()
 
 # Allow CORS
@@ -64,29 +89,6 @@ async def predict(file: UploadFile = File(...)):
         return {"predictions": predictions}
 
 
-class SearchRequestModel(BaseModel):
-    query: constr(min_length=0) = Field(..., description="Search keyword")
-    aroundLatLng: constr(pattern=r"\-?\d+\.?\d*,\s*\-?\d+\.?\d*") = Field(..., description="Coordinates in 'lat,lng' format")
-    getRankingInfo: StrictBool = Field(..., description="Must be a boolean")
-    page: StrictInt = Field(..., ge=0, description="Page number (0-indexed)")
-    aroundRadius: StrictInt = Field(..., gt=0, description="Search radius in meters (must be positive)")
-
-    class Config:
-        extra = "forbid"
-        arbitrary_types_allowed = False
-
-
-header = {
-    "X-Algolia-Application-Id": "55WTPYUY7Q",
-    "X-Algolia-API-Key": "41da89e44195a72b2d9d109eeee8db8f",
-    "Content-Type": "application/json; charset=UTF-8",
-    "origin": "https://find-a-derm.aad.org",
-    "referer": "https://find-a-derm.aad.org/"
-}
-
-AAD_URL_BASE = "https://55wtpyuy7q-dsn.algolia.net/1/indexes/production/query"
-
-
 @app.post("/findDoc")
 async def findDoc(searchRequest: SearchRequestModel):
     json_payload = json.loads(searchRequest.model_dump_json())
@@ -96,8 +98,23 @@ async def findDoc(searchRequest: SearchRequestModel):
         raise HTTPException(response.status_code, detail=response.json())
 
     json_data = response.json()
-    if "hits" in json_data:
-        return json_data["hits"]
-    else:
-        return {"hits": []}
+    doc_list = json_data.get("hits") or []
+    for index, doc in enumerate(doc_list):
+        locs = doc.get("locations") or []
 
+        # Sort by least to most important fields
+        locs = sorted(locs, key=lambda loc: loc.get("phone") != "", reverse=True)
+        locs = sorted(locs, key=lambda loc: loc.get("website") != "", reverse=True)
+        locs = sorted(locs, key=lambda loc: loc.get("_geoloc") != empty_loc, reverse=True)
+        locs = locs[0] if len(locs) > 0 else None
+
+        # Remove unnecessary fields
+        for ignore_field in ignore_fields:
+            if ignore_field in doc:
+                doc.pop(ignore_field)
+
+        # Update original array
+        doc["location"] = locs
+        doc_list[index] = doc
+
+    return doc_list

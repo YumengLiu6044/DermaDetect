@@ -2,6 +2,7 @@ import unittest
 import requests
 import time
 
+
 BACKEND_URL = "http://127.0.0.1:8080"   # Change this to the backend url when testing
 TEST_IMG_PATH = "skin_cancer_test.jpeg"
 search_header = {"Content-Type": "application/json"}
