@@ -31,6 +31,33 @@ class MyTestCase(unittest.TestCase):
             self.assertEqual(expected_response_code, response.status_code)
             self.assertTrue("predictions" in response.json())
 
+    def test_search_doc(self):
+        expected_response_code = 200
+        search_endpoint = BACKEND_URL + "/findDoc"
+        sample_payload = {
+            "query": "melanoma",
+            "page": 0,
+            "getRankingInfo": True,
+            "aroundRadius": 100000,
+            "aroundLatLng": "37.6436195373535, -121.867645263672"
+        }
+        response = requests.post(search_endpoint, json=sample_payload, headers=search_header)
+        self.assertEqual(response.status_code, expected_response_code)
+        self.assertTrue("hits" in response.json())
+
+    def test_search_doc_invalid_type(self):
+        expected_response_code = 422
+        search_endpoint = BACKEND_URL + "/findDoc"
+        sample_payload = {
+            "query": "melanoma",
+            "page": 0,
+            "getRankingInfo": True,
+            "aroundRadius": 100000,
+            "aroundLatLng": 123
+        }
+        response = requests.post(search_endpoint, json=sample_payload, headers=search_header)
+        self.assertEqual(response.status_code, expected_response_code)
+
 
 if __name__ == '__main__':
     unittest.main()
