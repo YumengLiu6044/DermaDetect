@@ -36,7 +36,7 @@ export default function FindADermatologist() {
 				currentLocation.current?.lng ?? 0
 			}`,
 			getRankingInfo: true,
-			aroundRadius: 100000,
+			aroundRadius: 10000,
 			page: 0,
 		};
 
