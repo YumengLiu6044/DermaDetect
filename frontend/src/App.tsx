@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./pages/layout";
 import Home from "./pages/Home";
 import HowItWorks from "./pages/HowItWorks";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import FindADermatologist from "./pages/FindADermatologist";
 

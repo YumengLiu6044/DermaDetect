@@ -28,3 +28,4 @@ mainFolder
 /training/data/image/
 derma-scan
 
+frontend/.env

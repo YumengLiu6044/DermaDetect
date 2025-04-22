@@ -38,7 +38,7 @@ function Footer() {
 						</div>
 					))}
 				</div>
-				<div className="mt-12 border-t border-gray-700 pt-8">
+				<div className="mt-6 border-t border-gray-700 pt-8">
 					<p className="text-base text-gray-400 text-center">
 						© 2025 DermaScan, Inc. All rights reserved.
 					</p>

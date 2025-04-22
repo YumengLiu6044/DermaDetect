@@ -257,7 +257,7 @@ const Home = () => {
 						</p>
 					</div>
 
-					<div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+					<div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 sm:grid-rows-3 lg:grid-rows-2">
 						<div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
 							<div className="p-6">
 								<div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white mb-4">
