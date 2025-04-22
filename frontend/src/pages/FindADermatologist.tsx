@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Map, { LocationLiteral } from "../components/Map";
 import {
 	handleHospitalQuery,
@@ -10,8 +10,12 @@ export default function FindADermatologist() {
 	const currentLocation = useRef<LocationLiteral | null>(null);
 
 	const [showSearchBar, setShowSearchBar] = useState(true);
+	const [filterTelehealth, setFilterTelehealth] = useState(false);
+	const [filterAcceptNewPatient, setFilterNewPatient] = useState(false);
+	const [filterAcceptCareCredit, setFilterAcceptCareCredit] = useState(false);
 	const [query, setQuery] = useState("");
 	const [docResults, setDocResults] = useState<DocObj[]>([]);
+	const [renderedDocResults, setRenderedDocResults] = useState<DocObj[]>([]);
 
 	const divRef = useRef<HTMLDivElement | null>(null);
 	const searchButtonRef = useRef<HTMLDivElement | null>(null);
@@ -23,7 +27,7 @@ export default function FindADermatologist() {
 				currentLocation.current?.lng ?? 0
 			}`,
 			getRankingInfo: true,
-			aroundRadius: 10000,
+			aroundRadius: 100000,
 			page: 0,
 		};
 
@@ -38,9 +42,27 @@ export default function FindADermatologist() {
 		}
 	};
 
+	useEffect(() => {
+		let filtered: DocObj[] = []
+		if (docResults.length > 1) {
+			filtered = docResults.filter((item) => {
+				return (
+					(!filterTelehealth ||
+					item.isUsingTelemedicine) &&
+					(!filterAcceptCareCredit ||
+					item.acceptsCareCredit) &&
+					(!filterAcceptNewPatient ||
+					item.isAcceptingNewPatients)
+				);
+			})
+		}
+
+		setRenderedDocResults(filtered)
+	}, [docResults, filterAcceptCareCredit, filterAcceptNewPatient, filterTelehealth])
+
 	return (
 		<div
-			className="flex flex-col items-baseline mx-20 mt-5 mb-2 gap-4 min-h-full"
+			className="flex flex-col items-baseline mx-20 my-5 gap-4 min-h-full"
 			ref={divRef}
 		>
 			<span className="text-lg lg:text-4xl font-medium">
@@ -105,6 +127,10 @@ export default function FindADermatologist() {
 									type="checkbox"
 									id="telehealth"
 									className="accent-indigo-400"
+									onChange={(e) =>
+										setFilterTelehealth(e.target.checked)
+									}
+									checked={filterTelehealth}
 								/>
 								<label htmlFor="telehealth" className="text-sm">
 									Telemedicine available
@@ -116,6 +142,10 @@ export default function FindADermatologist() {
 									type="checkbox"
 									id="newPatient"
 									className="accent-indigo-400"
+									checked={filterAcceptNewPatient}
+									onChange={(e) =>
+										setFilterNewPatient(e.target.checked)
+									}
 								/>
 								<label htmlFor="newPatient" className="text-sm">
 									Accepting new patients
@@ -127,6 +157,12 @@ export default function FindADermatologist() {
 									type="checkbox"
 									id="acceptCareCredit"
 									className="accent-indigo-400"
+									checked={filterAcceptCareCredit}
+									onChange={(e) =>
+										setFilterAcceptCareCredit(
+											e.target.checked
+										)
+									}
 								/>
 								<label
 									htmlFor="acceptCareCredit"
@@ -144,7 +180,7 @@ export default function FindADermatologist() {
 				>
 					<Map
 						currentLocation={currentLocation}
-						docResults={docResults}
+						docResults={renderedDocResults}
 					/>
 				</div>
 			</div>

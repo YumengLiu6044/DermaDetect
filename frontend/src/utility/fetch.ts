@@ -103,6 +103,7 @@ export async function handleHospitalQuery(
 		.then((response) => response.json())
 		.then((data) => {
 			successCallback(data);
+			console.log(data)
 		})
 		.catch((error) => {
 			console.error(error);
