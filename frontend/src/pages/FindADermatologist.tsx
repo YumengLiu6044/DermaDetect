@@ -96,7 +96,7 @@ export default function FindADermatologist() {
 						</div>
 
 						<div className="flex flex-col gap-2 border-t-1 border-gray-400 pt-3">
-							<span className="font-medium">Filter Results</span>
+							<span className="font-medium text-sm">Filter Results</span>
 
 							<div className="flex gap-3">
 								<input
@@ -140,7 +140,10 @@ export default function FindADermatologist() {
 				<div
 					className={`w-full h-full rounded-md border-1 border-gray-400 shadow-sm`}
 				>
-					<Map currentLocation={currentLocation} docLocs={docResults} />
+					<Map
+						currentLocation={currentLocation}
+						docResults={docResults}
+					/>
 				</div>
 			</div>
 		</div>

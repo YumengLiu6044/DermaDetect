@@ -12,10 +12,13 @@ export type LocationLiteral = {
 
 export interface MapProps {
 	currentLocation: React.RefObject<LocationLiteral | null>;
-	docLocs: DocObj[];
+	docResults: DocObj[];
 }
 
-export default function Map({ currentLocation, docLocs }: MapProps) {
+export default function Map({
+	currentLocation,
+	docResults,
+}: MapProps) {
 	const mapRef = useRef<HTMLDivElement | null>(null);
 	const map = useRef<maplibregl.Map | null>(null);
 
@@ -79,17 +82,14 @@ export default function Map({ currentLocation, docLocs }: MapProps) {
 	}, [mapRef]);
 
 	useEffect(() => {
-		if (!map.current || !docLocs) return
+		if (!map.current || !docResults) return;
 		renderMap();
-		const coordinates = docLocs.map(item => item.location._geoloc)
+		const coordinates = docResults.map((item) => item.location._geoloc);
 
 		coordinates.forEach((item) => {
 			if (map.current) {
 				new maplibregl.Marker({ color: "#FF0000" })
-					.setLngLat([
-						item.lng,
-						item.lat,
-					])
+					.setLngLat([item.lng, item.lat])
 					.addTo(map.current);
 			}
 		});
@@ -102,8 +102,7 @@ export default function Map({ currentLocation, docLocs }: MapProps) {
 			padding: 30,
 			maxZoom: 10,
 		});
-
-	}, [docLocs]);
+	}, [docResults]);
 
 	return (
 		<div className="relative">
@@ -112,6 +111,10 @@ export default function Map({ currentLocation, docLocs }: MapProps) {
 				className="border-black border-1 p-1.5 text-2xl font-bold hover:bg-white bg-white/70 rounded-xl shadow bi bi-crosshair absolute right-10 top-10"
 				onClick={centerMap}
 			></i>
+
+			<div className="flex flex-col gap-3 absolute left-3 top-3">
+				
+			</div>
 		</div>
 	);
 }

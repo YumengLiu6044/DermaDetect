@@ -6,4 +6,3 @@ requests
 torchvision
 pydantic
 requests
-geopy
