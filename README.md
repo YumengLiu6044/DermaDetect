@@ -13,8 +13,14 @@ Coming Soon – Link to hosted app (if deployed)
 ## CNN-Based Skin Cancer Detection
 Upload an image of a skin lesion, and get predictions based on a trained CNN model.
 
+<img width="1322" alt="image" src="https://github.com/user-attachments/assets/a5ddff59-ec81-46bb-8bd5-cb47444874b1" style=""/>
+
+
 ## Find Dermatologists Near You
 Uses geolocation and Mapbox GL to help users locate nearby dermatologists using AAD's public records.
+
+<img width="1400" alt="image" src="https://github.com/user-attachments/assets/26df71da-4281-453b-b872-65110777c54a" />
+
 
 ## Interactive UI
 Built with ReactJS for a modern, responsive user experience.
