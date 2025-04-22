@@ -73,12 +73,11 @@ export default function FindADermatologist() {
 								Search for Dermatologists
 							</span>
 
-							<div className="relative">
-								<i className="absolute top-1/2 -translate-y-1/2 left-3 bi bi-search text-lg text-gray-400"></i>
+							<div className="">
 								<input
 									onKeyDown={handleEnter}
 									type="text"
-									className="pl-10 rounded-md border-1 border-gray-400/70 py-1 pr-3 w-full"
+									className="px-3 rounded-md border-1 border-gray-400/70 py-1 w-full"
 									placeholder="Name, specialty, etc."
 									onChange={(e) => {
 										setQuery(e.target.value);
@@ -88,15 +87,18 @@ export default function FindADermatologist() {
 						</div>
 
 						<div
-							className="transition-all duration-300 ease-in-out w-full py-1 rounded-md bg-indigo-500 text-white flex items-center justify-center text-lg hover:bg-indigo-700"
+							className="transition-all duration-300 ease-in-out w-full py-1 rounded-md bg-indigo-500 flex items-center justify-center hover:bg-indigo-700 gap-3"
 							onClick={handleSearchDoc}
 							ref={searchButtonRef}
 						>
-							Search
+							<span className="text-white ">Search</span>
+							<i className="bi bi-search text-lg text-white"></i>
 						</div>
 
 						<div className="flex flex-col gap-2 border-t-1 border-gray-400 pt-3">
-							<span className="font-medium text-sm">Filter Results</span>
+							<span className="font-medium text-sm">
+								Filter Results
+							</span>
 
 							<div className="flex gap-3">
 								<input
