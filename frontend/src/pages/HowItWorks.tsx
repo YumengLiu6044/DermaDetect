@@ -29,7 +29,7 @@ export default function HowItWorks() {
 	return (
 		<div className="flex flex-col">
 			<div className="gradient-bg text-white">
-				<div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+				<div className="max-w-6xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
 					<div className="text-center flex flex-col gap-3">
 						<span className="text-5xl tracking-tight sm:text-3xl lg:text-5xl">
 							How DermaScan Works
