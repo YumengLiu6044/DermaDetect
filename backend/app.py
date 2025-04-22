@@ -40,7 +40,7 @@ app = FastAPI()
 # Allow CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["v0-xiying-fan-card.vercel.app"],
+    allow_origins=["https://v0-xiying-fan-card.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
