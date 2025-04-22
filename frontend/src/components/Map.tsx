@@ -79,7 +79,7 @@ export default function Map({ currentLocation, docLocs }: MapProps) {
 	}, [mapRef]);
 
 	useEffect(() => {
-		if (!map.current || docLocs.length === 0) return
+		if (!map.current || !docLocs) return
 		renderMap();
 		const coordinates = docLocs.map(item => item.location._geoloc)
 

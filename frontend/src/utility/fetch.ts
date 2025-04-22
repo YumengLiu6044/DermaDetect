@@ -92,6 +92,7 @@ export async function handleHospitalQuery(
 	successCallback: (data: any) => void,
 	failCallback?: () => void
 ) {
+	console.log("fetching")
 	fetch(API_ENDPOINT + "findDoc", {
 		method: "POST",
 		headers: {
