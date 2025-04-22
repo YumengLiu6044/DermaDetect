@@ -54,7 +54,7 @@ const Home = () => {
 	return (
 		<div>
 			<div className="gradient-bg text-white">
-				<div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+				<div className="max-w-6xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
 					<div className="text-center flex flex-col gap-3">
 						<span className="text-4xl tracking-tight sm:text-3xl lg:text-5xl">
 							Early Detection Saves Lives
@@ -89,7 +89,7 @@ const Home = () => {
 			</div>
 
 			<div className="bg-white py-12">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="lg:text-center">
 						<span className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
 							Skin Cancer Facts
@@ -182,7 +182,7 @@ const Home = () => {
 			</div>
 
 			<div id="scan-now" className="bg-gray-50 py-16">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="lg:text-center mb-12">
 						<span className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
 							Skin Analysis
@@ -247,7 +247,7 @@ const Home = () => {
 			</div>
 
 			<div className="bg-white py-16">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="lg:text-center mb-12">
 						<span className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
 							Why Choose DermaDetect
@@ -353,7 +353,7 @@ const Home = () => {
 			</div>
 
 			<div className="bg-indigo-50 py-16">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="lg:text-center mb-12">
 						<span className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
 							Success Stories
@@ -461,7 +461,7 @@ const Home = () => {
 			</div>
 
 			<div className="gradient-bg">
-				<div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+				<div className="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
 					<h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
 						<span className="block">
 							Ready to take control of your skin health?

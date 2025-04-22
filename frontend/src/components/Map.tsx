@@ -2,7 +2,6 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef } from "react";
 import { DocObj } from "../utility/fetch";
-import DoctorCard from "./DoctorCard";
 
 const MAP_API_KEY = import.meta.env.VITE_MAP_API_KEY;
 
@@ -14,9 +13,10 @@ export type LocationLiteral = {
 export interface MapProps {
 	currentLocation: React.RefObject<LocationLiteral | null>;
 	docResults: DocObj[];
+	center: LocationLiteral | null;
 }
 
-export default function Map({ currentLocation, docResults }: MapProps) {
+export default function Map({ currentLocation, docResults, center }: MapProps) {
 	const mapRef = useRef<HTMLDivElement | null>(null);
 	const map = useRef<maplibregl.Map | null>(null);
 
@@ -29,18 +29,6 @@ export default function Map({ currentLocation, docResults }: MapProps) {
 				],
 				zoom: 15,
 			});
-		}
-	};
-
-	const handleClickOnCard = (index: number) => {
-		const geoloc = docResults[index].location._geoloc;
-		if (geoloc.lat !== -1 || geoloc.lng != -1) {
-			if (map.current) {
-				map.current.flyTo({
-					center: [geoloc.lng, geoloc.lat],
-					zoom: 15,
-				});
-			}
 		}
 	};
 
@@ -65,6 +53,15 @@ export default function Map({ currentLocation, docResults }: MapProps) {
 				.addTo(map.current);
 		}
 	};
+
+	useEffect(() => {
+		if (map.current && center) {
+			map.current.flyTo({
+				center: [center.lng, center.lat],
+				zoom: 15,
+			});
+		}
+	}, [center]);
 
 	useEffect(() => {
 		if (!map.current) {
@@ -125,23 +122,6 @@ export default function Map({ currentLocation, docResults }: MapProps) {
 				className="border-black border-1 p-1.5 text-2xl font-bold hover:bg-white bg-white/70 rounded-xl shadow bi bi-crosshair absolute right-10 top-10"
 				onClick={centerMap}
 			></i>
-
-			{docResults.length > 0 ? (
-				<div className="flex flex-col gap-2 absolute left-5 top-5 max-w-110">
-					<span className="text-black text-2xl font-medium">
-						Found {docResults.length} Dermatologists
-					</span>
-
-					{docResults.map((item, index) => (
-						<div
-							key={index}
-							onClick={() => handleClickOnCard(index)}
-						>
-							<DoctorCard doc={item}></DoctorCard>
-						</div>
-					))}
-				</div>
-			) : null}
 		</div>
 	);
 }

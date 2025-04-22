@@ -5,11 +5,13 @@ import {
 	HospitalSearchRequest,
 	DocObj,
 } from "../utility/fetch";
+import DoctorCard from "../components/DoctorCard";
 
 export default function FindADermatologist() {
 	const currentLocation = useRef<LocationLiteral | null>(null);
-
-	const [showSearchBar, setShowSearchBar] = useState(true);
+	const [currentCenter, setCurrentCenter] = useState<LocationLiteral | null>(
+		null
+	);
 	const [filterTelehealth, setFilterTelehealth] = useState(false);
 	const [filterAcceptNewPatient, setFilterNewPatient] = useState(false);
 	const [filterAcceptCareCredit, setFilterAcceptCareCredit] = useState(false);
@@ -19,6 +21,13 @@ export default function FindADermatologist() {
 
 	const divRef = useRef<HTMLDivElement | null>(null);
 	const searchButtonRef = useRef<HTMLDivElement | null>(null);
+
+	const handleClickOnCard = (index: number) => {
+		const geoloc = docResults[index].location._geoloc;
+		if (geoloc.lat !== -1 || geoloc.lng != -1) {
+			setCurrentCenter(geoloc);
+		}
+	};
 
 	const handleSearchDoc = () => {
 		const searchQuery: HospitalSearchRequest = {
@@ -43,26 +52,28 @@ export default function FindADermatologist() {
 	};
 
 	useEffect(() => {
-		let filtered: DocObj[] = []
+		let filtered: DocObj[] = [];
 		if (docResults.length > 1) {
 			filtered = docResults.filter((item) => {
 				return (
-					(!filterTelehealth ||
-					item.isUsingTelemedicine) &&
-					(!filterAcceptCareCredit ||
-					item.acceptsCareCredit) &&
-					(!filterAcceptNewPatient ||
-					item.isAcceptingNewPatients)
+					(!filterTelehealth || item.isUsingTelemedicine) &&
+					(!filterAcceptCareCredit || item.acceptsCareCredit) &&
+					(!filterAcceptNewPatient || item.isAcceptingNewPatients)
 				);
-			})
+			});
 		}
 
-		setRenderedDocResults(filtered)
-	}, [docResults, filterAcceptCareCredit, filterAcceptNewPatient, filterTelehealth])
+		setRenderedDocResults(filtered);
+	}, [
+		docResults,
+		filterAcceptCareCredit,
+		filterAcceptNewPatient,
+		filterTelehealth,
+	]);
 
 	return (
 		<div
-			className="flex flex-col items-baseline mx-20 my-5 gap-4 min-h-full"
+			className="flex flex-col items-baseline mx-10 lg:mx-20 md:mx-7 my-5 gap-4 "
 			ref={divRef}
 		>
 			<span className="text-lg lg:text-4xl font-medium">
@@ -71,25 +82,8 @@ export default function FindADermatologist() {
 
 			<div className="flex flex-col lg:flex-row gap-5 w-full items-start">
 				{/* Side Search Bar */}
-				<div
-					className={`smooth-transition relative ${
-						showSearchBar ? "w-full lg:w-120" : "w-0"
-					}`}
-				>
-					<i
-						className={`hidden lg:inline bi bi-chevron-double-${
-							showSearchBar ? "left" : "right"
-						} absolute -right-2 font-medium text-lg border-1 rounded-md border-gray-400 text-gray-400 bg-white top-1/2 translate-y-1/2 hover:text-black hover:border-black`}
-						onClick={() => {
-							setShowSearchBar(!showSearchBar);
-						}}
-					></i>
-
-					<div
-						className={`smooth-transition flex flex-col p-3 w-full rounded-md border-1 border-gray-400 shadow-sm gap-3 overflow-hidden ${
-							showSearchBar ? "opacity-100" : "opacity-0"
-						}`}
-					>
+				<div className="w-full lg:w-200 flex flex-col gap-5">
+					<div className="smooth-transition flex flex-col p-3 w-full rounded-md border-1 border-gray-400 shadow-sm gap-3 overflow-hidden">
 						<div className="flex flex-col gap-2">
 							<span className="font-medium text-sm">
 								Search for Dermatologists
@@ -173,14 +167,29 @@ export default function FindADermatologist() {
 							</div>
 						</div>
 					</div>
+
+					{renderedDocResults.length > 0 ? (
+						<div className="flex flex-col gap-2 w-full overflow-y-auto">
+							<span className="text-black text-2xl font-medium">
+								Found {docResults.length} Dermatologists
+							</span>
+
+							{renderedDocResults.map((item, index) => (
+								<div key={index} onClick={() => handleClickOnCard(index)} className="h-full">
+									<DoctorCard doc={item}></DoctorCard>
+								</div>
+							))}
+						</div>
+					) : null}
 				</div>
 
 				<div
-					className={`w-full h-full rounded-md border-1 border-gray-400 shadow-sm`}
+					className={`w-full h-full rounded-md border-1 border-gray-400 shadow-sm static lg:sticky lg:top-10`}
 				>
 					<Map
 						currentLocation={currentLocation}
 						docResults={renderedDocResults}
+						center={currentCenter}
 					/>
 				</div>
 			</div>
