@@ -1,13 +1,13 @@
-export interface DoctorCardProps {
+// export interface DoctorCardProps {
 
-}
+// }
 
-function DoctorCard(props: DoctorCardProps) {
-  return (
-    <div>
+// function DoctorCard(props: DoctorCardProps) {
+//   return (
+//     <div>
       
-    </div>
-  )
-}
+//     </div>
+//   )
+// }
 
-export default DoctorCard
+// export default DoctorCard
