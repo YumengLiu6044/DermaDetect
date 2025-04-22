@@ -21,7 +21,7 @@ function Footer() {
 	return (
 		<div className="bg-gray-800/90">
 			<div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 ">
-				<div className="flex justify-between gap-8">
+				<div className="flex flex-col lg:flex-row justify-between gap-8">
 					{sections.map((item, index) => (
 						<div className="flex flex-col gap-3" key={index}>
 							<span className="text-lg font-medium text-white/80">
@@ -29,7 +29,7 @@ function Footer() {
 							</span>
 							{item.subTitles.map((subItem, subIndex) => (
 								<span
-									className="hidden sm:inline text-gray-400 hover:text-white"
+									className="text-gray-400 hover:text-white"
 									key={subIndex}
 								>
 									{subItem}

@@ -1,13 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import Map from "../components/Map";
+import React, { useRef, useState } from "react";
+import Map, { LocationLiteral } from "../components/Map";
 import { handleHospitalQuery, HospitalSearchRequest } from "../utility/fetch";
 
-
 export default function FindADermatologist() {
-	const [currentLocation, setCurrentLocation] = useState({
-		lat: 0,
-		lng: 0,
-	});
+	const currentLocation = useRef<LocationLiteral | null>(null);
+
 	const [showSearchBar, setShowSearchBar] = useState(true);
 	const [query, setQuery] = useState("");
 
@@ -17,8 +14,8 @@ export default function FindADermatologist() {
 	const handleSearchDoc = () => {
 		const searchQuery: HospitalSearchRequest = {
 			query: query,
-			aroundLatLng: `${currentLocation?.lat ?? 0},${
-				currentLocation?.lng ?? 0
+			aroundLatLng: `${currentLocation.current?.lat ?? 0},${
+				currentLocation.current?.lng ?? 0
 			}`,
 			getRankingInfo: true,
 			aroundRadius: 1000000,
@@ -28,35 +25,11 @@ export default function FindADermatologist() {
 		handleHospitalQuery(searchQuery, () => {});
 	};
 
-
 	const handleEnter = (e: React.KeyboardEvent) => {
 		if (e.key == "Enter") {
 			searchButtonRef.current?.click();
 		}
 	};
-
-	// const 
-
-	const getLocations = () => {
-		if (!navigator.geolocation) {
-			console.error("Geolocation isn't supported by your browser");
-			return;
-		}
-
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				setCurrentLocation({
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-				});
-			},
-			(error) => {
-				console.log(error.message);
-			}
-		);
-	};
-
-	useEffect(getLocations, [divRef]);
 
 	return (
 		<div
@@ -67,11 +40,15 @@ export default function FindADermatologist() {
 				Find a Dermatologist Near You
 			</span>
 
-			<div className="flex flex-col lg:flex-row gap-4 w-full items-start">
+			<div className="flex flex-col lg:flex-row gap-5 w-full items-start">
 				{/* Side Search Bar */}
-				<div className="relative flex">
+				<div
+					className={`smooth-transition relative ${
+						showSearchBar ? "w-full lg:w-120" : "w-0"
+					}`}
+				>
 					<i
-						className={`bi bi-chevron-double-${
+						className={`hidden lg:inline bi bi-chevron-double-${
 							showSearchBar ? "left" : "right"
 						} absolute -right-2 font-medium text-lg border-1 rounded-md border-gray-400 text-gray-400 bg-white top-1/2 translate-y-1/2 hover:text-black hover:border-black`}
 						onClick={() => {
@@ -80,10 +57,8 @@ export default function FindADermatologist() {
 					></i>
 
 					<div
-						className={`transition-all duration-300 ease-in-out flex flex-col rounded-md border-1 border-gray-400 shadow-sm gap-3 overflow-hidden ${
-							showSearchBar
-								? "p-4 w-110 opacity-100"
-								: "w-0 p-0 opacity-0"
+						className={`smooth-transition flex flex-col p-3 w-full rounded-md border-1 border-gray-400 shadow-sm gap-3 overflow-hidden ${
+							showSearchBar ? "opacity-100" : "opacity-0"
 						}`}
 					>
 						{/* <div className="flex flex-col gap-1">
@@ -115,7 +90,7 @@ export default function FindADermatologist() {
 									className="pl-10 rounded-md border-1 border-gray-400/70 py-1 pr-3 w-full"
 									placeholder="Name, specialty, etc."
 									onChange={(e) => {
-										setQuery(e.target.value)
+										setQuery(e.target.value);
 									}}
 								></input>
 							</div>
@@ -172,9 +147,9 @@ export default function FindADermatologist() {
 				</div>
 
 				<div
-					className={`w-full lg:col-span-2 h-full rounded-md border-1 border-gray-400 shadow-sm ransition-all duration-300 ease-in-out`}
+					className={`w-full h-full rounded-md border-1 border-gray-400 shadow-sm`}
 				>
-					<Map center={currentLocation} />
+					<Map currentLocation={currentLocation} docLocs={[]} />
 				</div>
 			</div>
 		</div>

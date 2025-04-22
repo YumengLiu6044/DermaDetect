@@ -1,5 +1,5 @@
-const API_ENDPOINT = "https://dermadetect.onrender.com/";
-// const API_ENDPOINT = "http://127.0.0.1:8080/";
+// const API_ENDPOINT = "https://dermadetect.onrender.com/";
+const API_ENDPOINT = "http://127.0.0.1:8080/";
 
 export type DiseaseProbs = {
 	"Benign keratosis-like lesions": number;
@@ -10,6 +10,10 @@ export type DiseaseProbs = {
 	"Basal cell carcinoma": number;
 	"Actinic keratoses": number;
 };
+
+export type DocObj = {
+
+}
 
 export async function handlePredict(
 	selectedFile: File,
