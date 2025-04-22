@@ -1,12 +1,17 @@
 import React, { useRef, useState } from "react";
 import Map, { LocationLiteral } from "../components/Map";
-import { handleHospitalQuery, HospitalSearchRequest } from "../utility/fetch";
+import {
+	handleHospitalQuery,
+	HospitalSearchRequest,
+	DocObj,
+} from "../utility/fetch";
 
 export default function FindADermatologist() {
 	const currentLocation = useRef<LocationLiteral | null>(null);
 
 	const [showSearchBar, setShowSearchBar] = useState(true);
 	const [query, setQuery] = useState("");
+	const [docResults, setDocResults] = useState<DocObj[]>([]);
 
 	const divRef = useRef<HTMLDivElement | null>(null);
 	const searchButtonRef = useRef<HTMLDivElement | null>(null);
@@ -18,11 +23,13 @@ export default function FindADermatologist() {
 				currentLocation.current?.lng ?? 0
 			}`,
 			getRankingInfo: true,
-			aroundRadius: 1000000,
+			aroundRadius: 10000,
 			page: 0,
 		};
 
-		handleHospitalQuery(searchQuery, () => {});
+		handleHospitalQuery(searchQuery, (data) => {
+			setDocResults(data);
+		});
 	};
 
 	const handleEnter = (e: React.KeyboardEvent) => {
@@ -61,22 +68,6 @@ export default function FindADermatologist() {
 							showSearchBar ? "opacity-100" : "opacity-0"
 						}`}
 					>
-						{/* <div className="flex flex-col gap-1">
-							<span className="font-medium text-sm">
-								Location
-							</span>
-
-							<div className="relative">
-								<i className="absolute top-1/2 -translate-y-1/2 left-3 bi bi-geo-alt text-xl text-gray-400"></i>
-								<input
-									type="text"
-									className="pl-10 rounded-md border-1 border-gray-400/70 py-1 pr-3 w-full"
-									placeholder="Enter your location"
-									onKeyDown={handleEnter}
-								></input>
-							</div>
-						</div> */}
-
 						<div className="flex flex-col gap-2">
 							<span className="font-medium text-sm">
 								Search for Dermatologists
@@ -149,7 +140,7 @@ export default function FindADermatologist() {
 				<div
 					className={`w-full h-full rounded-md border-1 border-gray-400 shadow-sm`}
 				>
-					<Map currentLocation={currentLocation} docLocs={[]} />
+					<Map currentLocation={currentLocation} docLocs={docResults} />
 				</div>
 			</div>
 		</div>

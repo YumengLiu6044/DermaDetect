@@ -1,5 +1,5 @@
-const API_ENDPOINT = "https://dermadetect.onrender.com/";
-// const API_ENDPOINT = "http://127.0.0.1:8080/";
+// const API_ENDPOINT = "https://dermadetect.onrender.com/";
+const API_ENDPOINT = "http://127.0.0.1:8080/";
 
 export type DiseaseProbs = {
 	"Benign keratosis-like lesions": number;
@@ -12,8 +12,49 @@ export type DiseaseProbs = {
 };
 
 export type DocObj = {
-
-}
+  acceptsCareCredit: boolean;
+  additionalInformation: string;
+  certification: string;
+  conditions: string[];
+  firstName: string;
+  gender: string;
+  groupHospital: string;
+  isAcceptingNewPatients: string;
+  isUsingTelemedicine: boolean;
+  isVisible: boolean;
+  languages: string;
+  lastName: string;
+  location: {
+    address1: string;
+    address2: string;
+    address3: string;
+    amsAddressType: string;
+    amsIsVisibleToPublic: boolean;
+    city: string;
+    company: string;
+    country: string;
+    fax: string;
+    hours: any[];
+    locationID: number;
+    phone: string;
+    postalCode: string;
+    stateProvince: string;
+    website: string;
+    _geoloc: {
+      lat: number;
+      lng: number;
+    };
+  };
+  medicalSchool: string[];
+  name: string;
+  practiceFocus: string[];
+  procedures: string[];
+  professionalMemberships: string;
+  profilePhotoUrl: string;
+  publishedArticles: string;
+  residencyTraining: string[];
+  specialtyTraining: string[];
+};
 
 export async function handlePredict(
 	selectedFile: File,
@@ -48,7 +89,7 @@ export type HospitalSearchRequest = {
 
 export async function handleHospitalQuery(
 	request: HospitalSearchRequest,
-	successCallback: () => void,
+	successCallback: (data: any) => void,
 	failCallback?: () => void
 ) {
 	fetch(API_ENDPOINT + "findDoc", {
@@ -60,8 +101,7 @@ export async function handleHospitalQuery(
 	})
 		.then((response) => response.json())
 		.then((data) => {
-			console.log(data);
-			successCallback();
+			successCallback(data);
 		})
 		.catch((error) => {
 			console.error(error);

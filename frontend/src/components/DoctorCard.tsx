@@ -1,13 +1,11 @@
-// export interface DoctorCardProps {
+import { DocObj } from "../utility/fetch"
 
-// }
-
-// function DoctorCard(props: DoctorCardProps) {
-//   return (
-//     <div>
+function DoctorCard(doc: DocObj) {
+  return (
+    <div>
       
-//     </div>
-//   )
-// }
+    </div>
+  )
+}
 
-// export default DoctorCard
+export default DoctorCard

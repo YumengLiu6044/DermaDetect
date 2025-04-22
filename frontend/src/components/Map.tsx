@@ -1,6 +1,7 @@
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef } from "react";
+import { DocObj } from "../utility/fetch";
 
 const MAP_API_KEY = import.meta.env.VITE_MAP_API_KEY;
 
@@ -11,7 +12,7 @@ export type LocationLiteral = {
 
 export interface MapProps {
 	currentLocation: React.RefObject<LocationLiteral | null>;
-	docLocs: LocationLiteral[];
+	docLocs: DocObj[];
 }
 
 export default function Map({ currentLocation, docLocs }: MapProps) {
@@ -25,7 +26,7 @@ export default function Map({ currentLocation, docLocs }: MapProps) {
 					currentLocation.current?.lng ?? 0,
 					currentLocation.current?.lat ?? 0,
 				],
-				zoom: 15
+				zoom: 15,
 			});
 		}
 	};
@@ -78,13 +79,30 @@ export default function Map({ currentLocation, docLocs }: MapProps) {
 	}, [mapRef]);
 
 	useEffect(() => {
-		docLocs.map((item, _) => {
+		if (!map.current || docLocs.length === 0) return
+		renderMap();
+		const coordinates = docLocs.map(item => item.location._geoloc)
+
+		coordinates.forEach((item) => {
 			if (map.current) {
-				new maplibregl.Marker()
-					.setLngLat([item.lng, item.lat])
+				new maplibregl.Marker({ color: "#FF0000" })
+					.setLngLat([
+						item.lng,
+						item.lat,
+					])
 					.addTo(map.current);
 			}
 		});
+
+		const bounds = coordinates.reduce((b, coord) => {
+			return b.extend(coord);
+		}, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
+
+		map.current.fitBounds(bounds, {
+			padding: 30,
+			maxZoom: 10,
+		});
+
 	}, [docLocs]);
 
 	return (
