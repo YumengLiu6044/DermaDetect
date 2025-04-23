@@ -47,7 +47,7 @@ function DoctorCard(props: { doc: DocObj }) {
 						</div>
 					)}
 				</div>
-				<div className="flex flex-wrap">
+				<div className="flex flex-wrap gap-3">
 					<span className="text-xs">
 						<i
 							className={
