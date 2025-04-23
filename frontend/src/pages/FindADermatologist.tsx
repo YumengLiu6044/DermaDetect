@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Map, { LocationLiteral } from "../components/Map";
+import loading from "../assets/loading.svg"
 import {
 	handleHospitalQuery,
 	HospitalSearchRequest,
@@ -12,6 +13,7 @@ export default function FindADermatologist() {
 	const [currentCenter, setCurrentCenter] = useState<LocationLiteral | null>(
 		null
 	);
+	const [isLoading, setIsLoading] = useState(false);
 	const [filterTelehealth, setFilterTelehealth] = useState(false);
 	const [filterAcceptNewPatient, setFilterNewPatient] = useState(false);
 	const [filterAcceptCareCredit, setFilterAcceptCareCredit] = useState(false);
@@ -39,10 +41,15 @@ export default function FindADermatologist() {
 			aroundRadius: 10000,
 			page: 0,
 		};
-
-		handleHospitalQuery(searchQuery, (data) => {
-			setDocResults(data);
-		});
+		setIsLoading(true);
+		handleHospitalQuery(
+			searchQuery,
+			(data) => {
+				setDocResults(data);
+				setIsLoading(false);
+			},
+			() => setIsLoading(false)
+		);
 	};
 
 	const handleEnter = (e: React.KeyboardEvent) => {
@@ -168,14 +175,23 @@ export default function FindADermatologist() {
 						</div>
 					</div>
 
-					{renderedDocResults.length > 0 ? (
+					{isLoading ? (
+						<div className="flex flex-col items-center text-center">
+						<img src={loading} className="w-fit" />
+						<span className="text-lg text-gray-400">Searching...</span>
+					</div>
+					) : renderedDocResults.length > 0 ? (
 						<div className="flex flex-col gap-2 w-full overflow-y-auto">
 							<span className="text-black text-2xl font-medium">
 								Found {docResults.length} Dermatologists
 							</span>
 
 							{renderedDocResults.map((item, index) => (
-								<div key={index} onClick={() => handleClickOnCard(index)} className="h-full">
+								<div
+									key={index}
+									onClick={() => handleClickOnCard(index)}
+									className="h-full"
+								>
 									<DoctorCard doc={item}></DoctorCard>
 								</div>
 							))}
