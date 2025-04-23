@@ -53,7 +53,7 @@ export default function FindADermatologist() {
 
 	useEffect(() => {
 		let filtered: DocObj[] = [];
-		if (docResults.length > 1) {
+		if (docResults.length > 0) {
 			filtered = docResults.filter((item) => {
 				return (
 					(!filterTelehealth || item.isUsingTelemedicine) &&
