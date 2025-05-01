@@ -2,7 +2,7 @@ import { DocObj } from "../utility/fetch";
 
 function DoctorCard(props: { doc: DocObj }) {
 	return (
-		<div className="flex gap-3 bg-white/95 border-1 border-gray-500 rounded-md p-3 shadow-xs">
+		<div className="flex gap-3 bg-white/95 border-1 border-gray-300 rounded-md p-3 shadow-xs hover:border-gray-500 hover:shadow transition-all">
 			<img
 				src={props.doc.profilePhotoUrl}
 				className="w-20 h-20 rounded-full"
