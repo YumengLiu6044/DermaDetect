@@ -68,7 +68,8 @@ const Home = () => {
 							<div className="rounded-md shadow">
 								<a
 									href="#scan-now"
-									className="no-underline w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
+									className="no-underline w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 hover:scale-110 transition-all md:py-4 md:text-lg md:px-10"
+									style={{color: "#4f39f6"}}
 								>
 									Scan Now{" "}
 									<i className="fas fa-arrow-down ml-2 text-indigo-600"></i>
@@ -77,7 +78,7 @@ const Home = () => {
 							<div className="ml-3 rounded-md shadow">
 								<Link
 									to="/how-it-works"
-									className="no-underline w-full flex items-center justify-center px-8 py-3 border-2 font-medium rounded-md text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 md:py-4 md:text-lg md:px-10"
+									className="no-underline hover:scale-110 transition-all w-full flex items-center justify-center px-8 py-3 border-2 font-medium rounded-md text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 md:py-4 md:text-lg md:px-10"
 									onClick={handleLinkClick}
 								>
 									Learn More
@@ -474,7 +475,7 @@ const Home = () => {
 						<div className="inline-flex rounded-md shadow">
 							<a
 								href="#scan-now"
-								className="no-underline inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50"
+								className="hover:scale-105 transition-all no-underline inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50"
 							>
 								Scan Your Skin Now
 							</a>
@@ -482,7 +483,7 @@ const Home = () => {
 						<div className="ml-3 inline-flex rounded-md shadow">
 							<Link
 								to="/how-it-works"
-								className="no-underline inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70"
+								className="hover:scale-105 transition-all no-underline inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70"
 								onClick={handleLinkClick}
 							>
 								Learn More
