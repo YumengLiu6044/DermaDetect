@@ -6,9 +6,6 @@ Try it here: https://v0-xiying-fan-card.vercel.app/
 # 🔍 Overview
 This project empowers users with a tool to detect potential skin cancer from uploaded skin images using deep learning. It also helps users find board-certified dermatologists nearby, using official data from the American Academy of Dermatology (AAD).
 
-# 🌐 Live Demo
-Coming Soon – Link to hosted app (if deployed)
-
 # 🧠 Features
 ## CNN-Based Skin Cancer Detection
 Upload an image of a skin lesion, and get predictions based on a trained CNN model.
