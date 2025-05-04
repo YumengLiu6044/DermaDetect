@@ -183,7 +183,7 @@ export default function FindADermatologist() {
 					) : renderedDocResults.length > 0 ? (
 						<div className="flex flex-col gap-2 w-full overflow-y-auto">
 							<span className="text-black text-2xl font-medium">
-								Found {docResults.length} Dermatologists
+								Found {renderedDocResults.length} Dermatologists
 							</span>
 
 							{renderedDocResults.map((item, index) => (
